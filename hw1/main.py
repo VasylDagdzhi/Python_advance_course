@@ -1,4 +1,4 @@
-from animals import Bear,Cat, Dog, Spider, Eagle
+from animals import Animal, Bear, Cat, Dog, Spider, Eagle
 
 
 print("\n Part 1. \n")
@@ -50,3 +50,10 @@ e.catch_rabbit()
 e.lay_an_egg()
 # e1.lay_an_egg() # uncomment to get the error
 e.say_smth()
+
+our_animals = [b, c, d, s, e]
+for animal in our_animals:
+    if isinstance(animal, Animal):
+        print(f"{animal.__class__.__name__} is an instance of class Animal")
+    else:
+        print(f"{animal.__class__.__name__} is not an instance of class Animal")
