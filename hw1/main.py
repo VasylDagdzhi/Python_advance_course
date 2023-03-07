@@ -1,5 +1,8 @@
 from animals import Animal, Bear, Cat, Dog, Spider, Eagle
 from human import Centaur
+from profile import Profile
+from datetime import datetime
+
 
 
 print("\n Part 1. \n")
@@ -70,3 +73,8 @@ cent.eat()
 cent.say_smth()
 cent.hit_with_a_fist()
 cent.kick_with_both()
+
+print("\n Part 2. \n")
+
+p = Profile("name", "lastname", "210930218038", "Hills ave 91", "name.lastname@gmail.com", datetime.now(), 21, "male")
+print(p.__str__())
