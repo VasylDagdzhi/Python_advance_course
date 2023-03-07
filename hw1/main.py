@@ -1,4 +1,5 @@
 from animals import Animal, Bear, Cat, Dog, Spider, Eagle
+from human import Centaur
 
 
 print("\n Part 1. \n")
@@ -57,3 +58,15 @@ for animal in our_animals:
         print(f"{animal.__class__.__name__} is an instance of class Animal")
     else:
         print(f"{animal.__class__.__name__} is not an instance of class Animal")
+
+
+print("\n Part 1a. \n")
+
+print("Centaur:\n")
+cent = Centaur("Kent", "male")
+cent.sleep()
+cent.walk()
+cent.eat()
+cent.say_smth()
+cent.hit_with_a_fist()
+cent.kick_with_both()
