@@ -1,9 +1,8 @@
 from animals import Animal, Bear, Cat, Dog, Spider, Eagle
 from human import Centaur
 from profile import Profile
+from interfaces import Laptop, HPLaptop
 from datetime import datetime
-
-
 
 print("\n Part 1. \n")
 
@@ -24,7 +23,6 @@ c.eat()
 c.catch_mice()
 c.sharpen_claws()
 c.say_smth()
-
 
 print("\nDog class:\n")
 d = Dog("Lucky", "male")
@@ -62,7 +60,6 @@ for animal in our_animals:
     else:
         print(f"{animal.__class__.__name__} is not an instance of class Animal")
 
-
 print("\n Part 1a. \n")
 
 print("Centaur:\n")
@@ -78,3 +75,8 @@ print("\n Part 2. \n")
 
 p = Profile("name", "lastname", "210930218038", "Hills ave 91", "name.lastname@gmail.com", datetime.now(), 21, "male")
 print(p.__str__())
+
+print("\n Part 3*. \n")
+
+h = HPLaptop("1980:1600", "EN", "L", "yes", ["USB", "COM", "VGA"], "yes")
+h.__str__()
