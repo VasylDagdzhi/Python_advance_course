@@ -78,3 +78,11 @@ class Eagle(Animal):
             print(f"The eagle {self.name} is laying an egg.")
         else:
             raise ValueError(f"{self.name} is a male. Males cannot lay eggs!")
+
+
+class Horse(Animal):
+    def say_smth(self):
+        print("EEEAAAAHHHHH")
+
+    def kick_with_both(self):
+        print(f"{self.name} has just kicked with both legs! The poor bastard flew away 10 meters!")
