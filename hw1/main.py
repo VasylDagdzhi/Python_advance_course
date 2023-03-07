@@ -1,7 +1,7 @@
 from animals import Animal, Bear, Cat, Dog, Spider, Eagle
 from human import Centaur
 from profile import Profile
-from interfaces import Laptop, HPLaptop
+from interfaces import HPLaptop
 from datetime import datetime
 
 print("\n Part 1. \n")
