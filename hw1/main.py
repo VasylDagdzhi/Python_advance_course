@@ -79,4 +79,4 @@ print(p.__str__())
 print("\n Part 3*. \n")
 
 h = HPLaptop("1980:1600", "EN", "L", "yes", ["USB", "COM", "VGA"], "yes")
-h.__str__()
+print(h.__str__())

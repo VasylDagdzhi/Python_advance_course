@@ -60,18 +60,14 @@ class HPLaptop(Laptop):
         return f"Web cam presence: {self.web_camera}"
 
     def Ports(self):
-        print(" -> Ports list:")
+        string = " -> Ports list:\n"
         for port in self.ports:
-            print(f"\t - {port}")
+            string += f"\t - {port}\n"
+        return string
 
     def Dynamicsand(self):
         return f"Dynamic sand presence: {self.dynamic_sand_presence}"
 
     def __str__(self):
-        print(f"{self.__class__}")
-        print(f" -> {self.Screen()}")
-        print(f" -> {self.Keyboard()}")
-        print(f" -> {self.Touchpad()}")
-        print(f" -> {self.WebCam()}")
-        self.Ports()
-        print(f" -> {self.Dynamicsand()}")
+        return f"{self.__class__}\n -> {self.Screen()}\n -> {self.Keyboard()}\n -> {self.Touchpad()}\n " \
+               f"-> {self.WebCam()}\n {self.Ports()} -> {self.Dynamicsand()}"
