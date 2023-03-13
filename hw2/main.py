@@ -20,7 +20,7 @@ while True:
         sleep(2)
     elif choice == "3":
         Controller.make_money()
-        sleep(5)
+        sleep(10)
         Controller.show_customer_info()
     elif choice == "4":
         Controller.show_houses()
