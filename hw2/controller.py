@@ -61,7 +61,7 @@ class Controller:
         for house in Controller.realtor.houses:
             index += 1
             print(f"[{index}] \t Area: {house.area}m2 \t Cost: {house.cost}$.")
-        print(index)
+        print(f"Total:\t{index}")
         try:
             selection = int(
                 input("Please enter the house index that you want to buy: ")

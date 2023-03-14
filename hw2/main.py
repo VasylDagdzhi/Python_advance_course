@@ -1,7 +1,6 @@
 from time import sleep
 from controller import Controller
 
-print(bool(10))
 
 Controller.init()
 
@@ -35,3 +34,4 @@ while True:
         exit(0)
     else:
         pass
+
