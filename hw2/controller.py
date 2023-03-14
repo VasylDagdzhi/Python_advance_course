@@ -11,6 +11,8 @@ class Controller:
     def init():
         Controller.realtor = Realtor.get_instance()
         Controller.customer = None
+        # checking Singleton implementation:
+        # r = Realtor("Jack", [Home(40, 2000), Home(100, 10000), Home(400, 80000)], 90)
 
     @staticmethod
     def show_menu():

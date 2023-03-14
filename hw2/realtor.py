@@ -13,7 +13,7 @@ class Realtor:
             self.houses = houses
             self.discount = discount
         else:
-            print("Realtor already exists!")
+            raise ValueError(f"Realtor already exists!\nHis name is: {self.__instance.name}.")
 
     @staticmethod
     def get_instance():
