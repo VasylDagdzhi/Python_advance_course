@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title>Python 3.10 Flask App</title>
+    </head>
+    <body>
+        <h1>Python 3.10 Flask App</h1>
+
+        <form action="/" method="POST">
+            <label for="message_id">Message ID: </label>
+            <input type="text" name="message_id" />
+            <input type="submit" value="Submit" />
+        </form>
+        {% if output %}
+            <h2>Output:</h2>
+            <pre>{{ output }}</pre>
+        {% endif %}
+    </body>
+</html>
