@@ -1,0 +1,13 @@
+1. select * from employees;
+2. select * from employees where first_name="David";
+3. select * from employees where department_id IN(1,5);
+4. select * from employees where department_id IN(1,2,4) AND commission_pct>0;
+5. SELECT * FROM employees WHERE DAY(hire_date) = 1;
+6. SELECT * FROM employees WHERE YEAR(hire_date) = 2008;
+7. SELECT CONCAT('Tomorrow is ', DAYNAME(DATE_ADD(CURDATE(), INTERVAL 1 DAY)), ' ', DAY(DATE_ADD(CURDATE(), INTERVAL 1 DAY)), ' of ', MONTHNAME(DATE_ADD(CURDATE(), INTERVAL 1 DAY))) AS 'Tomorrow';
+8. select employee_id, first_name, last_name, email, phone_number, concat(day(hire_date), 'st of ', monthname(hire_date), ', ', year(hire_date)) AS 'hire_date', job_id, salary, commission_pct, manager_id, department_id from employees;
+9. SELECT  employee_id, first_name, last_name, email, phone_number, hire_date, job_id, CONCAT('$', FORMAT(salary + salary * commission_pct/100, 2)) AS 'Salary',manager_id, department_id FROM employees;
+10. SELECT * FROM employees WHERE YEAR(hire_date) = 2005 AND MONTH(hire_date) = 3;
+11. SELECT      DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s') AS 'Дата',     SECOND(NOW()) AS 'Секунда',     MINUTE(NOW()) AS 'Хвилина',     HOUR(NOW()) AS 'Година',     DAY(NOW()) AS 'День',     MONTH(NOW()) AS 'Місяць',     YEAR(NOW()) AS 'Рік';
+12. SELECT employee_id, first_name, last_name,email,phone_number,hire_date,job_id, CONCAT('$', FORMAT(salary + (salary * commission_pct / 100), 2)) AS 'Full Salary', manager_id, department_id  FROM employees;
+13. SELECT employee_id,first_name, last_name,email,phone_number,hire_date,job_id,salary,  CASE WHEN commission_pct > 0 THEN 'Yes' ELSE 'No' END AS 'Salary bonus',manager_id, department_id FROM employees;
