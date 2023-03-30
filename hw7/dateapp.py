@@ -6,7 +6,6 @@ from typing import Any
 from flask import Flask, abort, request
 
 app = Flask(__name__)
-
 app.logger.setLevel(logging.DEBUG)
 
 
