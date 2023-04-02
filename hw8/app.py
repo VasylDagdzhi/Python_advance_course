@@ -82,8 +82,9 @@ def stats_root():
 
 @app.route('/stats/<string:method>')
 def stats(method):
-    format = request.args.get('format', 'json')
+    format = request.args.get('format', 'json')  # automatically assign the default format to 'json' if not specified
 
+    # in case an invalid format is specified:
     if (format is not None) and (format not in formatters):
         abort(400, f'Format {format} is not a valid format. Supported:{[f for f in formatters]}')
 
@@ -110,7 +111,7 @@ def stats(method):
             res, mime = func(**args)
     except Exception as exc:
         abort(400, exc)  # in case something is not right, catch and print the error
-    
+
     return Response(res, mimetype=mime)
 
 
