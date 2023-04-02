@@ -36,9 +36,9 @@ def _parse_spec(spec):
 # formatter_name: (mimetype, format_function)
 # ...
 formatters = {
-    'json': ('application/json', json.dumps),
+    'json': ('application/json', functools.partial(json.dumps, indent=2)),
     'toml': ('text', functools.partial(toml.dumps)),
-    'yaml': ('text', functools.partial(yaml.dump, sort_keys=False)),
+    'yaml': ('text', functools.partial(yaml.dump, sort_keys=False, indent=2)),
     'repr': ('text', repr)
 }
 
@@ -75,26 +75,13 @@ def method_api(method, format='json', **args):
 # method_name: method_callable
 
 # start building
-methods = {
-    'boot_time': (ps.boot_time,),
-    'cpu_count': (ps.cpu_count,),
-    'cpu_freq': (ps.cpu_freq,),
-    'cpu_percent': (ps.cpu_percent,),
-    'cpu_stats': (ps.cpu_stats,),
-    'cpu_times': (ps.cpu_times,),
-    'cpu_times_percent': (ps.cpu_times_percent,),
-    'disk_io_counters': (ps.disk_io_counters,),
-    'disk_partitions': (ps.disk_partitions,),
-    'getloadavg': (ps.getloadavg,),
-    'net_if_stats': (ps.net_if_stats,),
-    'net_io_counters': (ps.net_io_counters,),
-    'sensors_battery': (ps.sensors_battery,),
-    'sensors_fans': (ps.sensors_fans,),
-    'sensors_temperatures': (ps.sensors_temperatures,),
-    'swap_memory': (ps.swap_memory,),
-    'virtual_memory': (ps.virtual_memory,),
-    'wait_procs': (ps.wait_procs,)
-}
+methods = dict.fromkeys([
+    'boot_time', 'cpu_count', 'cpu_freq', 'cpu_percent', 'cpu_stats',
+    'cpu_times', 'cpu_times_percent', 'disk_io_counters', 'disk_partitions',
+    'getloadavg', 'net_if_stats', 'net_io_counters', 'sensors_battery',
+    'sensors_fans', 'sensors_temperatures', 'swap_memory', 'virtual_memory',
+    'wait_procs'
+])
 # get original methods by name
 methods = {name: getattr(ps, name) for name in methods}
 # patch one as it requires argument
