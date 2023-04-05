@@ -72,7 +72,7 @@ def datetime_info() -> str:
 
 @app.route('/datetime/')
 @app.route('/datetime/<time>')
-def datetime_default(time: str = "+2") -> str:
+def datetime_default(time: str = "0") -> str:
     """
     Returns an HTML page with the current date and time in the specified time zone.
 
