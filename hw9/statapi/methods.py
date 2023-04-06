@@ -1,22 +1,18 @@
 import functools
-import json
-import logging
 from enum import Enum
 
 import psutil as ps
-import toml
-import yaml
+import json, toml, yaml
 
 # (!) Note: depends on PIP packages: psultil toml pyyaml
 
 
 __all__ = ('methods')
 
-
 def _parse_spec(spec):
     """Convert library-internal data structures.
-
-    Conversion is done into general Python types.
+    
+    Conversion is done intogeneral Python types.
     """
 
     if hasattr(spec, '_asdict'):
@@ -36,39 +32,28 @@ def _parse_spec(spec):
 # formatter_name: (mimetype, format_function)
 # ...
 formatters = {
-    'json': ('application/json', functools.partial(json.dumps, indent=2)),
-    'toml': ('text', functools.partial(toml.dumps)),
-    'yaml': ('text', functools.partial(yaml.dump, sort_keys=False, indent=2)),
+    'json': ('application/json', json.dumps),
+    'toml': ('text', toml.dumps),
+    'yaml': ('text', functools.partial(yaml.dump, sort_keys=False)),
     'repr': ('text', repr)
 }
 
 
-def method_api(method, format='json', **args):
+def method_api(method, format='json'):
     """Call method, parse result and format it accordingly."""
+    # TODO: add args handling
 
-    spec = method(**args)
+    spec = method()
     parsed = _parse_spec(spec)  # convert to Python native structures
 
-    # in case we got a list, not a dict, for it to be parsed correctly, we form a dict out ot it first
-    if isinstance(parsed, list):
-        data = []
-        for item in parsed:
-            if isinstance(item, dict):
-                data.append(item)
-            else:
-                data.append({'value': item})
-        parsed = {'data': data}
-    # check if it is a single value, like an integer and output it in the correct format
-    elif not isinstance(parsed, dict):
-        parsed = {'value': parsed}
-
-    mime, func = formatters.get(format, (None, None))
-    if func is None:
-        raise ValueError(400, f'Format {format} not supported')
-
+    # return direct python data structure, if requested
+    if format is None:
+        return parsed
+    # otherwise, apply serialization with specified formatter
+    mime, func = formatters[format]
     res = func(parsed)
 
-    return res, mime;
+    return res, mime
 
 
 # dict of methods wrapped for api calls of a form:
@@ -93,13 +78,9 @@ methods = {
 }
 
 if __name__ == '__main__':
-    spec = ps.cpu_freq()
+    spec = ps.sensors_temperatures()
     res = _parse_spec(spec)
-    logging.log(logging.INFO, spec)
-    mtd = methods['cpu_freq']
+
+    mtd = methods['sensors_temperatures']
     res, mime = mtd(format='yaml')
     print(f'Yaml res:\n{res}')
-    res, mime = mtd(format='json')
-    print(f'Json res:\n{res}')
-    res, mime = mtd(format='toml')
-    print(f'Toml res:\n{res}')
