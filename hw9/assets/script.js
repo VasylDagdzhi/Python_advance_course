@@ -6,6 +6,7 @@ const DEF_COLOR = 'rgb(72, 149, 239)'
 const DEF_BGCOLOR = DEF_COLOR
 
 
+
 function round(value, precision)
 {
     const power = Math.pow(10, precision || 0)

@@ -1,21 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="HTML5">
-  <meta name="author" content="Author">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Memory statistics</title>
-  <link rel="stylesheet" href="/assets/style.css">
-  <!-- <link rel="icon" href="./favicon.ico" type="image/x-icon"> -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="HTML5"/>
+    <meta name="author" content="Author"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>{{ pagetitle }}</title>
+    <link rel="stylesheet" href="{{ url_for('assets.static', filename='fetcher.css') }}"/>
 </head>
 <body>
-  <h1>Memory Stats:</h1>
-  <span>Available memory: MEM_FREE / MEM_TOTAL MiB</span>
-  <div class="pbar" id="mem">
-    <!-- use js to fill it on client-side -->
-  </div> 
-  <script src="/assets/script.js"></script>
+<h1>{{ statname | title }} Stats:</h1>
+<table>
+    <tr>
+        <td>
+            <span>(RAM) free on the system, in Gigabytes:</span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="progress-bar" id="pb1">
+                <div class="progress-bar-label left-label" id="pb1_leftlabel">
+                    Free RAM: {{ '{:.2f}'.format(mem['free'] / (1024 ** 3)) }} GB | {{ '{:.0f}'.format(mem['free'] /
+                    mem['total'] * 100) }} %
+                </div>
+                <div class="progress-bar-label right-label" id="pb1_rightlabel">
+                    All RAM: {{ '{:.2f}'.format(mem['total'] / (1024 ** 3)) }} GB
+                </div>
+                <div class="progress-bar-fill" id="pb1_fill" style="width: {{ '{:.0f}'.format(mem['free'] /
+                    mem['total'] * 100) }}%;"></div>
+
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span>(RAM) available on the system, in Gigabytes. This includes memory that is currently unused by any processes, as well as memory that is being used for disk caching or other system-level tasks.</span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="progress-bar" id="pb2">
+                <div class="progress-bar-label left-label" id="pb2_leftlabel">
+                    Available RAM: {{ '{:.2f}'.format(mem['available'] / (1024 ** 3)) }} GB | {{
+                    '{:.0f}'.format(mem['available'] /
+                    mem['total'] * 100) }} %
+                </div>
+                <div class="progress-bar-label right-label" id="pb2_rightlabel">
+                    All RAM: {{ '{:.2f}'.format(mem['total'] / (1024 ** 3)) }} GB
+                </div>
+                <div class="progress-bar-fill" id="pb2_fill" style="width: {{ '{:.0f}'.format(mem['available'] /
+                    mem['total'] * 100) }}%;"></div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span>(RAM) that is currently being used by processes on the system, in Gigabytes:</span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="progress-bar" id="pb3">
+                <div class="progress-bar-label left-label" id="pb3_leftlabel">
+                    Used RAM: {{ '{:.2f}'.format(mem['used'] / (1024 ** 3)) }} GB | {{
+                    '{:.0f}'.format(mem['used'] /
+                    mem['total'] * 100) }} %
+                </div>
+                <div class="progress-bar-label right-label" id="pb3_rightlabel">
+                    All RAM: {{ '{:.2f}'.format(mem['total'] / (1024 ** 3)) }} GB
+                </div>
+                <div class="progress-bar-fill" id="pb3_fill" style="width: {{ '{:.0f}'.format(mem['used'] /
+                    mem['total'] * 100) }}%;"></div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span>(RAM)  that is currently being used for disk caching, in Gigabytes:</span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="progress-bar" id="pb4">
+                <div class="progress-bar-label left-label" id="pb4_leftlabel">
+                    Cached RAM: {{ '{:.2f}'.format(mem['cached'] / (1024 ** 3)) }} GB | {{
+                    '{:.0f}'.format(mem['used'] /
+                    mem['total'] * 100) }} %
+                </div>
+                <div class="progress-bar-label right-label" id="pb4_rightlabel">
+                    All RAM: {{ '{:.2f}'.format(mem['total'] / (1024 ** 3)) }} GB
+                </div>
+                <div class="progress-bar-fill" id="pb4_fill" style="width: {{ '{:.0f}'.format(mem['cached'] /
+                    mem['total'] * 100) }}%;"></div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Validation:
+            <ul>
+                <li>
+                    total = used + free + buff/cache + shared
+                </li>
+                <li>
+                    free = total - used - buff/cache - shared
+                </li>
+                <li>
+                    used = total - free - buff/cache - shared
+                </li>
+                <li>
+                    buff/cache = total - used - free - shared
+                </li>
+            </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>Verification:
+            <table>
+                <tr>
+                    <td><b>Total</b></td>
+                    <td id="totalFormula">Formula: {{ '{:.2f}'.format(mem['used'] / (1024 ** 3)) }} + {{
+                        '{:.2f}'.format(mem['free'] / (1024 ** 3)) }} + {{ '{:.2f}'.format(mem['cached'] / (1024
+                        ** 3)) }} + {{ '{:.2f}'.format(mem['shared'] / (1024 ** 3)) }} ~ {{
+                        '{:.2f}'.format(mem['total'] / (1024 ** 3)) }}
+                    </td>
+                    <td id="totalValues">Values: {{ '{:.2f}'.format((mem['used'] / (1024 ** 3)) + (mem['free'] /
+                        (1024 ** 3)) + (mem['cached'] / (1024 ** 3)) + (mem['shared'] / (1024 ** 3))) }} ~ {{
+                        '{:.2f}'.format(mem['total'] / (1024 ** 3)) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Free</b></td>
+                    <td id="freeFormula">Formula: {{ '{:.2f}'.format(mem['total'] / (1024 ** 3)) }} - {{
+                        '{:.2f}'.format(mem['used'] / (1024 ** 3)) }} - {{ '{:.2f}'.format(mem['cached'] /
+                        (1024 ** 3)) }} - {{ '{:.2f}'.format(mem['shared'] / (1024 ** 3)) }} ~ {{
+                        '{:.2f}'.format(mem['free'] / (1024 ** 3)) }}
+                    </td>
+                    <td id="freeValues">Values: {{ '{:.2f}'.format((mem['total'] / (1024 ** 3)) - (mem['used'] /
+                        (1024 ** 3)) - (mem['cached'] / (1024 ** 3)) - (mem['shared'] / (1024 ** 3))) }} ~ {{
+                        '{:.2f}'.format(mem['free'] / (1024 ** 3)) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Used</b></td>
+                    <td id="usedFormula">Formula: {{ '{:.2f}'.format(mem['total'] / (1024 ** 3)) }} - {{
+                        '{:.2f}'.format(mem['free'] / (1024 ** 3)) }} - {{ '{:.2f}'.format(mem['cached'] / (1024
+                        ** 3)) }} - {{ '{:.2f}'.format(mem['shared'] / (1024 ** 3)) }} ~ {{
+                        '{:.2f}'.format(mem['used'] / (1024 ** 3)) }}
+                    </td>
+                    <td id="usedValues">Values: {{ '{:.2f}'.format((mem['total'] / (1024 ** 3))
+                        - (mem['free'] / (1024 ** 3)) - (mem['cached'] / (1024 ** 3)) - (mem['shared'] / (1024
+                        ** 3))) }} ~ {{ '{:.2f}'.format(mem['used'] / (1024 ** 3)) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Cache</b></td>
+                    <td id="cacheFormula">Formula: {{ '{:.2f}'.format(mem['total'] / (1024 ** 3)) }} - {{
+                        '{:.2f}'.format(mem['free'] / (1024 ** 3)) }} - {{ '{:.2f}'.format(mem['used'] / (1024
+                        ** 3)) }} - {{ '{:.2f}'.format(mem['shared'] / (1024 ** 3)) }} ~ {{
+                        '{:.2f}'.format(mem['cached'] / (1024 ** 3)) }}
+                    </td>
+                    <td id="cacheValues">Values: {{ '{:.2f}'.format((mem['total'] / (1024 ** 3)) - (mem['free']
+                        / (1024 ** 3)) - (mem['used'] / (1024 ** 3)) - (mem['shared'] / (1024 ** 3))) }} ~ {{
+                        '{:.2f}'.format(mem['cached'] / (1024 ** 3)) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">The small difference in values is explained by the rounding of values to 2 decimal
+                        places during calculations.
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<script src="{{ url_for('assets.static', filename='fetcher.js') }}"></script>
 </body>
 </html>
+
