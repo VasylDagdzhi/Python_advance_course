@@ -2,7 +2,8 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  margin: 0;
+  margin: 160px; /* add margin to create space for header */
+  background-size: cover;
 }
 
 a {
@@ -20,6 +21,12 @@ a:hover {
   padding: 0.5em 1em;
   display: flex;
   justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background-color: white;
 }
 
 .site-identity h1 {
@@ -108,15 +115,12 @@ font-weight:bold;
 
 
 .slide{
-
-
-
-      -webkit-user-select:none;
-user-select:none;
-  -moz-user-select:none;
+    -webkit-user-select:none;
+    user-select:none;
+    -moz-user-select:none;
     position:absolute;
-        height:280px;
-    width:240px;
+    height: 65vh;
+    width: 65vh;
 
 box-shadow: 0px 10px 30px 0px rgba(0,0,0,0.3);
 background:#fcfcfc;
@@ -135,10 +139,22 @@ background:#fcfcfc;
 }
 .transition {
      -webkit-transition: cubic-bezier(0,1.95,.49,.73) .4s ;
-   -moz-transition: cubic-bezier(0,1.95,.49,.73) .4s ;
-      transition: cubic-bezier(0,1.95,.49,.73) .4s ;
+     -moz-transition: cubic-bezier(0,1.95,.49,.73) .4s ;
+     transition: cubic-bezier(0,1.95,.49,.73) .4s ;
 }
 
 
 
-
+.download-button {
+  display: block;
+  margin-top: 5px;
+  padding: 5px;
+  background-color: #007bff;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+}
+.download-button:hover {
+  background-color: #0069d9;
+}

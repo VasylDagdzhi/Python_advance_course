@@ -39,21 +39,18 @@
                 transform: translateX(-10px);
             }
         }
-
-
-
     </style>
     <h1>
-        <span>There are {{ cat_count }} cats in our collection!</span>
-        <br><span>Swipe them to look through :)</span>
-        <br><span>Or click to download it!</span>
+        <span>Chose the background or upload one,</span>
+        <br><span>Select the text you would like to appear,</span>
+        <br><span>And click on to download what comes up)</span>
     </h1>
 
     <div class="slider">
     {% for num in range(cat_count) %}
     <div class="slide">
-        <img src="{{ request.host_url }}cats/catoftheday{{ num }}.jpg"/>
-        <a class="download-button" href="{{ request.host_url }}cats/catoftheday{{ num }}.jpg" download>Download</a>
+        <img src="{{ cats[num] }}"/>
+        <a class="download-button" href="{{ cats[num] }}" download>Download</a>
     </div>
     {% endfor %}
 </div>

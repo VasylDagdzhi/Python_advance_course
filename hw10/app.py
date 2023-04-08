@@ -1,6 +1,8 @@
+import os
+
 import catday
 import utils
-from flask import Flask, Response, abort, send_file, render_template
+from flask import Flask, Response, abort, send_file, render_template, url_for, send_from_directory
 import PIL.Image
 import io
 import logging
@@ -28,7 +30,19 @@ def home():
 @app.route('/cats/')
 def list_cats():
     cat_count = len(catday.CATS)
-    return render_template('cats.html', title=page_title, message=cat_count, mimetype='text/html')
+    return render_template('cats.html', title=page_title, cat_count=cat_count, mimetype='text/html', cats=catday.CATS)
+
+
+@app.route('/cats/<path:filename>')
+def get_cat_image(filename):
+    return send_from_directory('cats', filename)
+
+
+@app.route('/cats/create')
+def cat_create():
+    cat_count = len(catday.CATS)
+    image_urls = [url_for('get_cat_image', filename=os.path.basename(path)) for path in catday.CATS]
+    return render_template('create.html', title=page_title, cat_count=cat_count, mimetype='text/html', cats=image_urls)
 
 
 def get_cat(numext, try_random=False):

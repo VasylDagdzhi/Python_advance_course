@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>{{ title }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/ultracatstyles.css') }}">
-</head>
-<body>
-<header class="site-header">
+    <header class="site-header" style="background-color: white;">
     <div class="header">
         <h1><span class="animated">Cat of the day!</span></h1>
     </div>
@@ -16,11 +14,14 @@
         <ul class="nav">
             <li><a href="{{ url_for('home') }}">Home</a></li>
             <li><a href="{{ url_for('list_cats') }}">Cats</a></li>
-            <li><a href="#">Blog</a></li>
+            <li><a href="{{ url_for('cat_create') }}">Create</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </nav>
 </header>
+</head>
+<body style="background-image: url({{ url_for('static', filename='assets/background.jpg') }});">
+
     <div class="content">
         <br><img src="/cats/catoftheday.jpg" alt="catoftheday"></img></br>
     </div>
