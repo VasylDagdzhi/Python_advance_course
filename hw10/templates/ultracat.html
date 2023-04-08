@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/ultracatstyles.css') }}">
+</head>
+<body>
+<header class="site-header">
+    <div class="header">
+        <h1><span class="animated">Cat of the day!</span></h1>
+    </div>
+    <nav class="site-navigation">
+        <ul class="nav">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('list_cats') }}">Cats</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+    <div class="content">
+        <br><img src="/cats/catoftheday.jpg" alt="catoftheday"></img></br>
+    </div>
+</body>
+</html>
