@@ -27,8 +27,8 @@ def home():
 
 @app.route('/cats/')
 def list_cats():
-    msg = f'There are {len(catday.CATS)} cats in our collection!'
-    return render_template('cats.html', title=page_title, message=msg, mimetype='text/html')
+    cat_count = len(catday.CATS)
+    return render_template('cats.html', title=page_title, message=cat_count, mimetype='text/html')
 
 
 def get_cat(numext, try_random=False):
