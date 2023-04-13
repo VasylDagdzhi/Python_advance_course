@@ -12,6 +12,7 @@ FORMATS = {v: k for k, v in EXTENSIONS.items()}
 class ImageIOError(Exception):
     pass
 
+
 class ImageIO(io.BytesIO):
     # class-level default to ensure attr is always present
     ext = None
@@ -31,7 +32,6 @@ class ImageIO(io.BytesIO):
         # assuming no image object passed
         # -> act as standard BytesIO
         super().__init__(*args, **kwargs)
-    
 
     def save_image(self, img, ext=None):
         assert self.tell() == 0, 'Buffer not empty before save'
@@ -46,14 +46,12 @@ class ImageIO(io.BytesIO):
 
         img.save(self, format=format)
 
-        self.truncate() # remove extra data if there were any
-        self.seek(0)    # rewind so it gets read from the beginning
+        self.truncate()  # remove extra data if there were any
+        self.seek(0)  # rewind so it gets read from the beginning
         self.ext = ext
         return self.getbuffer().nbytes
-    
+
     def as_base64(self, altchars=None):
         data = self.getvalue()
         enc = base64.b64encode(data, altchars=altchars)
         return enc.decode('ascii')
-
-

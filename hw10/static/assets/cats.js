@@ -162,6 +162,6 @@ function onWndLoad() {
         document.removeEventListener('touchmove', slideMouseMove, false);
 
     }
-
-
 }
+
+

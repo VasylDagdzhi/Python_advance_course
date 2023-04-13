@@ -1,8 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
-
 body {
   font-family: "Open Sans", sans-serif;
-  margin: 160px; /* add margin to create space for header */
+  margin: 160px;
   background-size: cover;
 }
 
@@ -55,40 +53,22 @@ a:hover {
     text-align: center;
     position: center;
     }
-    .content {
+.content {
   display: flex;
   justify-content: center;
-  align-items: center;
   position: relative;
   max-height: 75vh;
   max-width: 75vw;
   margin: auto;
 }
-    .content img {
+
+.content img {
   max-width: 100%;
   max-height: 70vh;
   width: auto;
   height: auto;
 }
 
-@-webkit-keyframes animation{from{opacity:0; -webkit-transform:scale(1.2) rotateX(45deg);transform:scale(1.2) rotateX(45deg);} to{ }}
-
-@-webkit-keyframes animation2{from{opacity:0; -webkit-transform:scale(1.2) rotateX(45deg);transform:scale(1.2) rotateX(45deg);} to{ }}
-
-body *{ cursor: url(https://dl.dropboxusercontent.com/u/50037593/ElasticSlider/images/cur.png), auto;}
-
-body {
-           /*-webkit-perspective:1000px;*/
-           overflow:hidden;
-
-cursor: url(https://dl.dropboxusercontent.com/u/50037593/ElasticSlider/images/cur.png), auto;
-}
-@font-face
-{
-font-family: font;
-src: url(https://dl.dropboxusercontent.com/u/50037593/ElasticSlider/hand.ttf);
-font-weight:bold;
-}
 
 .slider div p{color:#1c1c1c;position:absolute;bottom:-65px; font-family:font; font-size:22px;}
 .slider{
@@ -158,3 +138,5 @@ background:#fcfcfc;
 .download-button:hover {
   background-color: #0069d9;
 }
+
+

@@ -23,8 +23,6 @@
 </head>
 <body style="background-image: url({{ url_for('static', filename='assets/background.jpg') }});margin: 140px;">
 <div class="content">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Animosa&display=swap" rel="stylesheet">
     <style>
         h1 span {
             font-family: 'Animosa', sans-serif;
@@ -43,7 +41,7 @@
 
 
     </style>
-    <h1>
+    <h1 style="margin: 160px;">
         <span>There are {{ cat_count }} cats in our collection!</span>
         <br><span>Swipe them to look through :)</span>
         <br><span>Or click to download it!</span>

@@ -21,9 +21,8 @@
 </header>
 </head>
 <body style="background-image: url({{ url_for('static', filename='assets/background.jpg') }});">
-
     <div class="content">
-        <br><img src="/cats/catoftheday.jpg" alt="catoftheday"></img></br>
+        <br><img src="{{ url_for('cat_modified', name='.jpg') }}" alt="catoftheday"></br>
     </div>
 </body>
 </html>

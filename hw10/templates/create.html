@@ -6,56 +6,108 @@
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
     <title>{{ title }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/ultracatstyles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/create.css') }}">
     <header class="site-header">
-    <div class="header">
-        <h1><span class="animated">Cat of the day!</span></h1>
-    </div>
-    <nav class="site-navigation">
-        <ul class="nav">
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('list_cats') }}">Cats</a></li>
-            <li><a href="{{ url_for('cat_create') }}">Create</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </nav>
-</header>
+        <div class="header">
+            <h1><span class="animated">Cat of the day!</span></h1>
+        </div>
+        <nav class="site-navigation">
+            <ul class="nav">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('list_cats') }}">Cats</a></li>
+                <li><a href="{{ url_for('cat_create') }}">Create</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 </head>
-<body style="background-image: url({{ url_for('static', filename='assets/background.jpg') }});margin: 140px;">
+<body style="background-image: url({{ url_for('static', filename='assets/background.jpg') }});">
 <div class="content">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Animosa&display=swap" rel="stylesheet">
-    <style>
-        h1 span {
-            font-family: 'Animosa', sans-serif;
-            animation: animosa 2s infinite;
-        }
-
-        @keyframes animosa {
-            0%, 100% {
-                transform: translateX(0);
-            }
-            50% {
-                transform: translateX(-10px);
-            }
-        }
-    </style>
-    <h1>
-        <span>Chose the background or upload one,</span>
-        <br><span>Select the text you would like to appear,</span>
-        <br><span>And click on to download what comes up)</span>
-    </h1>
-
-    <div class="slider">
-    {% for num in range(cat_count) %}
-    <div class="slide">
-        <img src="{{ cats[num] }}"/>
-        <a class="download-button" href="{{ cats[num] }}" download>Download</a>
+    <div class="thumbnail-container" style="margin: right;height: 80vh;">
+        {% for num in range(cat_count) %}
+        <div class="thumbnail-wrapper">
+            <input type="radio" class="radio" id="thumbnail{{ num }}" name="thumbnail"
+                   value="{{ cats[num] }}">
+            <label for="thumbnail{{ num }}">
+                <img class="thumbnail" src="{{ cats[num] }}" alt="Thumbnail {{ num }}">
+            </label>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+    <table>
+        <th><h1 id="curve">Creative Cat Creator :)</h1></th>
+        <tr>
+            <td>
+                <h3 id="instructions">
+                    <ul>
+                        <li>Chose the background cat image on the left or upload your own one,</li>
+                        <li>Select the text you would like to appear,</li>
+                        <li>And click on to download what comes up)</li>
+                    </ul>
+                </h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form id="create-cat-form" action="/cats/upload_cat" method="POST" enctype="multipart/form-data">
+                    <div class="slider_thumbnails">
+                        <div>
+                            <label for="top-text">Top text:</label>
+                            <input type="text" id="top-text" name="top-text" style="width: 40vw; height:5vh;"
+                                   value="Default top text"/>
+                            <label for="bottom-text">Bottom text:</label>
+                            <input type="text" id="bottom-text" name="bottom-text" style="width: 40vw; height:5vh;"
+                                   value="Default bottom text"/>
+                            <input type="submit" value="Create Cat"/>
+                        </div>
+                    </div>
+                    <input id="image-upload" type="file" accept="image/*" name="image" onchange="previewImage(event)">
+                    <br><br>
+                    <img id="preview" src="{{ url_for('static', filename='assets/placeholder.jpg') }}"
+                         alt="Image preview" style="max-height:30vh;">
+                </form>
+            </td>
+        </tr>
+    </table>
 </div>
-</div>
-</div>
-<script src="{{ url_for('static', filename='assets/cats.js') }}"></script>
+<script>
+function previewImage(event) {
+  var form = document.getElementById('create-cat-form');
+  var input = document.getElementById('image-upload');
+  var preview = document.getElementById('preview');
+  var topText = form.elements['top-text'].value;
+  var bottomText = form.elements['bottom-text'].value;
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/cats/upload_cat', true);
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      preview.src = URL.createObjectURL(xhr.response);
+    } else {
+      console.error('Request failed. Returned status code:', xhr.status);
+    }
+  };
+  xhr.responseType = 'blob';
+  var formData = new FormData();
+  formData.append('image', input.files[0]);
+  formData.append('top-text', topText);
+  formData.append('bottom-text', bottomText);
+  xhr.send(formData);
+}
+
+var radioButtons = document.querySelectorAll('input[type=radio]');
+radioButtons.forEach(function(radioButton) {
+  radioButton.addEventListener('change', function() {
+    console.log('Radio button changed');
+    if (radioButton.checked) {
+      var thumbnailId = radioButton.getAttribute('id');
+      var thumbnailImg = document.querySelector('label[for="' + thumbnailId + '"] img');
+      var preview = document.getElementById('preview');
+      preview.src = thumbnailImg.src;
+      console.log(thumbnailImg.src);
+    }
+  });
+});
+
+</script>
 </body>
 </html>
