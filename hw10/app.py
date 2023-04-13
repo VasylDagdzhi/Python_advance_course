@@ -108,7 +108,7 @@ def cat_upload():
     return send_file(file, as_attachment=True, download_name=name)
 
 
-@app.route('/cats/create_cat/<string:name>/<string:top_text>/<string:bottom_text>')
+@app.route('/cats/create_cat/<string:name>/<string:top_text>/<string:bottom_text>', methods=['GET'])
 def create_cat(name: str, top_text: str, bottom_text: str):
     logger.debug(f'Debug message: {name} | {top_text} | {bottom_text}')
     image = Application.find_cat_file_by_name(name)
