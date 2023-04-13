@@ -25,7 +25,8 @@ class Application:
 
     @classmethod
     def get_cat_url_by_name(cls, name):
-        return url_for('get_cat_image', filename=os.path.basename(cls.find_cat_file_by_name(name)))
+        url = url_for('get_cat_image', filename=os.path.basename(cls.find_cat_file_by_name(name)))
+        return url
 
     @classmethod
     def get_cat(cls, numext, try_random=False):

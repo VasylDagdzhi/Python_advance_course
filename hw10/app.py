@@ -2,12 +2,15 @@ import os
 
 from logic import Application
 from utils.textcut import cutter
-import catday
+import logging
 import utils
 from flask import Flask, abort, send_file, render_template, url_for, send_from_directory, request
+import requests
 import PIL.Image
 
 app = Flask(__name__)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 
 @app.route('/')
@@ -102,6 +105,26 @@ def cat_upload():
         abort(400, str(err))
     # passed to browser
     name = f'catoftheday{base}-{date_suffix}{ext}'
+    return send_file(file, as_attachment=True, download_name=name)
+
+
+@app.route('/cats/create_cat/<string:name>/<string:top_text>/<string:bottom_text>')
+def create_cat(name: str, top_text: str, bottom_text: str):
+    logger.debug(f'Debug message: {name} | {top_text} | {bottom_text}')
+    image = Application.find_cat_file_by_name(name)
+    text = f"{top_text}\n{bottom_text}"
+    try:
+        file = Application.find_cat_file_by_name(name)
+        img = PIL.Image.open(file)
+        bgcolor = (255, 255, 255, int(255 * 0.4))
+        cut = cutter.text_cutout(img, text, bgcolor=bgcolor)
+        if image.suffix in ['.jpg', '.jpeg', '.jfif']:
+            # eliminate alpha-channel as JPEG has no alpha
+            cut = cut.convert('RGB')
+        file = utils.ImageIO(cut, ext=image.suffix)
+    except utils.ImageIOError as err:
+        abort(400, str(err))
+    # passed to browser
     return send_file(file, as_attachment=True, download_name=name)
 
 

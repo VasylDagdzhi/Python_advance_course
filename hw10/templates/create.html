@@ -16,7 +16,6 @@
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="{{ url_for('list_cats') }}">Cats</a></li>
                 <li><a href="{{ url_for('cat_create') }}">Create</a></li>
-                <li><a href="#">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -26,9 +25,9 @@
     <div class="thumbnail-container" style="margin: right;height: 80vh;">
         {% for num in range(cat_count) %}
         <div class="thumbnail-wrapper">
-            <input type="radio" class="radio" id="thumbnail{{ num }}" name="thumbnail"
+            <input type="radio" class="radio" id="{{ num }}" name="thumbnail"
                    value="{{ cats[num] }}">
-            <label for="thumbnail{{ num }}">
+            <label for="{{ num }}">
                 <img class="thumbnail" src="{{ cats[num] }}" alt="Thumbnail {{ num }}">
             </label>
         </div>
@@ -100,13 +99,29 @@ radioButtons.forEach(function(radioButton) {
     console.log('Radio button changed');
     if (radioButton.checked) {
       var thumbnailId = radioButton.getAttribute('id');
+      var form = document.getElementById('create-cat-form');
+      var topText = form.elements['top-text'].value;
+      var bottomText = form.elements['bottom-text'].value;
+      console.log(thumbnailId);
       var thumbnailImg = document.querySelector('label[for="' + thumbnailId + '"] img');
       var preview = document.getElementById('preview');
-      preview.src = thumbnailImg.src;
-      console.log(thumbnailImg.src);
+      const url = `/cats/create_cat/${thumbnailImg.src.split('/').pop()}/${topText}/${bottomText}`;
+      preview.src = url
+      console.log(url);
     }
   });
 });
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 </body>
