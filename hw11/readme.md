@@ -8,7 +8,7 @@ Created as a simple flask app with dummy API that allows to:
 - removing a file listed in specific folder from the database: http://127.0.0.1:5000/remove_file/sample_files/dummy.jpg
 
 DB schema:
-![](/home/ljnero/Python_advance/hw11/simple_filesystem.png)
+![](./simple_filesystem.png)
 
 DB schema in mysql:
-[](simple filesystem_mysql_create.sql)
+[](./simple filesystem_mysql_create.sql)
