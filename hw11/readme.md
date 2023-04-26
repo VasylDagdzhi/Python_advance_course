@@ -11,4 +11,4 @@ DB schema:
 ![](./simple_filesystem.png)
 
 DB schema in mysql:
-![](./simple filesystem_mysql_create.sql) 
+![](https://github.com/VasylDagdzhi/Python_advance_course/blob/master/hw11/simple%20filesystem_mysql_create.sql) 
