@@ -11,4 +11,4 @@ DB schema:
 ![](./simple_filesystem.png)
 
 DB schema in mysql:
-[](./simple filesystem_mysql_create.sql)
+![](./simple filesystem_mysql_create.sql)
